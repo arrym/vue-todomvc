@@ -22,6 +22,15 @@
       newTodo: 'this is init',
       visibility: 'all'
     },
+    watch: {
+      todos: {
+        handler: function() {
+          console.log('handler');
+          todoStorage.save(this.todos);
+        },
+        deep: true
+      }
+    },
     computed: {
       filteredTodos: function() {
         return filters[this.visibility](this.todos);
@@ -41,12 +50,6 @@
           })
         }
       }
-    },
-    watch: {
-      handler: function() {
-        todoStorage.save(this.todos);
-      },
-      deep: true
     },
     methods: {
       addTodo: function() {
