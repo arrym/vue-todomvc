@@ -2,28 +2,34 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>vue-todo-mvc</title>
     <link rel="stylesheet" href="css/index.css" charset="utf-8">
+    <style>[v-cloak] {display: none}</style>
   </head>
   <body>
     <section class="todoapp">
       <header class="header">
         <h1>todos</h1>
-        <input class="new-todo" placeholder="What needs to be done?">
+        <input class="new-todo"
+          placeholder="What needs to be done?"
+          autofocus autocomplete="off"
+          v-model="newTodo"
+          @keyup.enter="addTodo"
+        >
       </header>
-      <section class="main">
+      <section class="main" v-show="todos.length" v-cloak>
         <input class="toggle-all" type="checkbox">
         <ul class="todo-list">
-          <li class="todo">
+          <li class="todo" v-for="todo in todos">
             <div class="view">
               <input class="toggle" type="checkbox">
-              <label>123</label>
+              <label>{{todo.title}}</label>
               <button class="destroy"></button>
             </div>
           </li>
         </ul>
       </section>
-      <footer class="footer">
+      <footer class="footer" v-cloak>
         <span class="todo-count">
           <strong>1</strong>left
         </span>
@@ -45,6 +51,6 @@
     <script src="lib/vue.js" charset="utf-8"></script>
     <script src="js/store.js" charset="utf-8"></script>
     <script src="js/app.js" charset="utf-8"></script>
-    <script src="js/route.js" charset="utf-8"></script>
+    <script src="js/routes.js" charset="utf-8"></script>
   </body>
 </html>
