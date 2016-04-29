@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>vue-todo-mvc</title>
+    <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/index.css" charset="utf-8">
     <style>[v-cloak] {display: none}</style>
   </head>
@@ -17,10 +18,10 @@
           @keyup.enter="addTodo"
         >
       </header>
-      <section class="main" v-show="todos.length" v-cloak>
+      <section class="main" v-cloak>
         <input class="toggle-all" type="checkbox" v-model="allDone">
         <ul class="todo-list">
-          <li class="todo" v-for="todo in filteredTodos" :class="{completed: todo.completed, editing: todo == editedTodo}">
+          <li class="todo animated" v-for="todo in filteredTodos" transition="bounce" :class="{completed: todo.completed, editing: todo == editedTodo}">
             <div class="view">
               <input class="toggle" type="checkbox" v-model="todo.completed">
               <label @dblclick="editTodo(todo)">{{todo.title}}</label>
@@ -56,9 +57,16 @@
       <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
     </footer>
     <script src="lib/vue.js" charset="utf-8"></script>
+    <script src="lib/vue-animated-list.js" charset="utf-8"></script>
     <script src="js/store.js" charset="utf-8"></script>
     <script src="js/app.js" charset="utf-8"></script>
     <script src="lib/director.js" charset="utf-8"></script>
     <script src="js/routes.js" charset="utf-8"></script>
+    <script>
+    Vue.transition('bounce', {
+      enterClass: 'bounceInLeft',
+      leaveClass: 'bounceOutRight'
+    })
+    </script>
   </body>
 </html>
