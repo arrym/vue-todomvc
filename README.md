@@ -10,3 +10,16 @@
 - fetch:根据传入过滤条件不同获取不同数据
 
 第三步：实现app功能
+
+## 动态效果
+使用 [animate.css](https://github.com/daneden/animate.css) 做动态效果真心好用
+example
+```javascript
+Vue.transition('bounce', {
+  enterClass: 'bounceInLeft',
+  leaveClass: 'bounceOutRight'
+})
+
+<li class="todo animated" v-for="todo in filteredTodos" transition="bounce">
+
+```
