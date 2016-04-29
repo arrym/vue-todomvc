@@ -20,6 +20,7 @@
     data: {
       todos: todoStorage.fetch(),
       newTodo: 'this is init',
+      editedTodo: null,
       visibility: 'all'
     },
     watch: {
@@ -63,6 +64,35 @@
       },
       removeTodo: function(todo) {
         this.todos.$remove(todo);
+      },
+      editTodo: function(todo) {
+        // 在html中使用的数据必须在data上定义，否则在调试工具中也看不到
+        this.beforeEditCache = todo.title;
+        this.editedTodo = todo;
+      },
+      doneEdit: function(todo) {
+        if (!this.editedTodo) return;
+        this.editedTodo = null;
+        todo.title = todo.title.trim();
+        if (!todo.title) {
+          this.removeTodo(todo);
+        }
+      },
+      cancelEdit: function(todo) {
+        this.editedTodo = null;
+        todo.title = this.beforeEditCache;
+      },
+      removeCompleted: function() {
+        this.todos = filters.active(this.todos);
+      }
+    },
+    directives: {
+      'todo-focus': function(value) {
+        if (!value) return;
+        var el = this.el;
+        Vue.nextTick(function() {
+          el.focus();
+        });
       }
     }
   });
