@@ -16,10 +16,10 @@
     }
   };
   exports.app = new Vue({
-    el: '.todoapp',
+    el: '.container',
     data: {
       todos: todoStorage.fetch(),
-      newTodo: 'this is init',
+      newTodo: '',
       editedTodo: null,
       visibility: 'all'
     },
@@ -61,6 +61,9 @@
           completed: false
         });
         this.newTodo = '';
+      },
+      toggleStatus: function(todo) {
+        todo.completed = !todo.completed;
       },
       removeTodo: function(todo) {
         this.todos.$remove(todo);
