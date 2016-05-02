@@ -21,12 +21,11 @@
       todos: todoStorage.fetch(),
       newTodo: '',
       editedTodo: null,
-      visibility: 'all'
+      visibility: 'all',
     },
     watch: {
       todos: {
         handler: function() {
-          console.log('handler');
           todoStorage.save(this.todos);
         },
         deep: true
@@ -34,21 +33,16 @@
     },
     computed: {
       filteredTodos: function() {
-        return filters[this.visibility](this.todos);
+        const todos = filters[this.visibility](this.todos);
+        console.log(todos);
+        return todos;
       },
       remaining: function() {
         return filters.active(this.todos).length;
       },
       allDone: {
         get: function() {
-          console.log('get');
           return this.remaining === 0;
-        },
-        set: function(value) {
-          console.log('set');
-          this.todos.forEach(function(todo) {
-            todo.completed = value;
-          })
         }
       }
     },
@@ -64,6 +58,12 @@
       },
       toggleStatus: function(todo) {
         todo.completed = !todo.completed;
+      },
+      toggleAll() {
+        const done = this.allDone;
+        this.todos.forEach(function(todo) {
+          todo.completed = !done;
+        });
       },
       removeTodo: function(todo) {
         this.todos.$remove(todo);

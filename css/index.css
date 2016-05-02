@@ -44,7 +44,7 @@ h1{
 .main{
 	margin: 0px;
 	padding: 0;
-	background: #333333;
+	background: RGBA(44, 62, 80, 1.00);
 	color: #ffffff;
 }
 .main .todo{
@@ -58,6 +58,16 @@ h1{
 }
 .main .todo:last-child{
 	margin: 0;
+}
+.main .completed{
+	background: RGBA(44, 62, 80, 1.00);
+}
+.main .completed .glyphicon-ok{
+	color: #34495e;
+	background: #31ADA0;
+}
+.main .completed .content{
+	color: #31ADA0;
 }
 .main .content{
 	margin-left: 40px;
@@ -76,8 +86,11 @@ h1{
 	color: rgba(255, 255, 255, 0);
 }
 .ok{
-	color: #34495e;
-	background: #31ADA0;
+
+}
+.okAll{
+	color: #31ADA0;
+	background: #34495e;
 }
 .footer{
 	position: relative;
@@ -109,4 +122,79 @@ h1{
 }
 .footer .todo-count{
 	margin-left: 40px;
+}
+
+.bounce-transition{
+}
+@keyframes bounceInLeft {
+	from, 60%, 75%, 90%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-3000px, 0, 0);
+    transform: translate3d(-3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(25px, 0, 0);
+    transform: translate3d(25px, 0, 0);
+  }
+
+  75% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(5px, 0, 0);
+    transform: translate3d(5px, 0, 0);
+  }
+
+  to {
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.bounce-enter{
+	animation: bounceInLeft .5s;
+}
+
+@keyframes bounceInRight {
+	from, 60%, 75%, 90%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(3000px, 0, 0);
+    transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(-25px, 0, 0);
+    transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(-5px, 0, 0);
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  to {
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+.bounce-leave{
+	animation: bounceInRight .5s;
 }
