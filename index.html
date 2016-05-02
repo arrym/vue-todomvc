@@ -6,37 +6,38 @@
     <title>vue-todo-mvc</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/vue-animate.css">
     <link rel="stylesheet" href="css/index.css" charset="utf-8">
     <style>[v-cloak] {display: none}</style>
   </head>
   <body>
     <div class="container">
-      <h1>todos</h1>
+      <h1 class="appname">todos</h1>
       <div class="todoapp">
         <header class="header">
-          <span class="glyphicon glyphicon-plus animated"></span>
+          <span class="glyphicon glyphicon-plus" @click="changeEditing"></span>
           <span class="glyphicon glyphicon-search"></span>
           <input class="search"
             placeholder="Search..."
             autofocus autocomplete="off"
-            v-model="newTodo"
+            v-model="query"
             @keyup.enter="addTodo"
           >
         </header>
+        <div class="edit animated" v-show="editing" transition="updown" :class="{editing: editing}">
+          <input class="title" type="text" v-model="title" placeholder="标题">
+          <textarea class="content" v-model="detail" debounce="500">
+          </textarea>
+          <button class="btn btn-save" type="button" @click="save">保 存</button>
+          <button class="btn btn-cancel" type="button" @click="cancelEdit">取 消</button>
+        </div>
         <ul class="main" v-cloak>
-          <li class="todo animated" v-for="todo in filteredTodos" transition="bounce" :class="{completed: todo.completed}">
+          <li class="todo animated" v-for="todo in filteredTodos | filterBy query in 'title' 'detail'" transition="bounce" :class="{completed: todo.completed, bounce: todo.completed}">
             <span class="glyphicon glyphicon-ok" @click="toggleStatus(todo)"></span>
             <div class="content">
-              <h4 class="title" @dblclick="editTodo(todo)">{{todo.title}}</h4>
-              <p>这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，这是测试用的文本，</p>
+              <input class="title" type="text" v-model="todo.title">
+              <div class="detail" v-html="todo.detail | marked"></div>
             </div>
-            <!-- <input class="edit" type="text"
-              v-model="todo.title"
-              v-todo-focus="todo == editedTodo"
-              @blur="doneEdit(todo)"
-              @keyup.enter="doneEdit(todo)"
-              @keyup.esc="cancelEdit(todo)"
-              > -->
           </li>
         </ul>
       </div>
@@ -55,7 +56,7 @@
         </button>
       </footer>
     </div>
-
+    <script src="lib/marked.min.js" charset="utf-8"></script>
     <script src="lib/vue.js" charset="utf-8"></script>
     <script src="lib/vue-animated-list.js" charset="utf-8"></script>
     <script src="js/store.js" charset="utf-8"></script>
@@ -63,7 +64,7 @@
     <script src="lib/director.js" charset="utf-8"></script>
     <script src="js/routes.js" charset="utf-8"></script>
     <!-- <script>
-      Vue.transition('bounce', {
+      Vue.transition('editing', {
         type: 'animation',
         enterClass: 'bounceInLeft',
         leaveClass: 'bounceOutRight'

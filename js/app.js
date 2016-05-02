@@ -19,9 +19,11 @@
     el: '.container',
     data: {
       todos: todoStorage.fetch(),
-      newTodo: '',
-      editedTodo: null,
       visibility: 'all',
+      query: '',
+      title: '',
+      detail: '',
+      editing: false
     },
     watch: {
       todos: {
@@ -33,9 +35,7 @@
     },
     computed: {
       filteredTodos: function() {
-        const todos = filters[this.visibility](this.todos);
-        console.log(todos);
-        return todos;
+        return filters[this.visibility](this.todos);
       },
       remaining: function() {
         return filters.active(this.todos).length;
@@ -65,21 +65,20 @@
           todo.completed = !done;
         });
       },
+      save: function() {
+        const title = this.title.trim();
+        const detail = this.detail.trim();
+        if (!title || !detail) return;
+        this.todos.push({
+          title: title,
+          detail: detail,
+          completed: false
+        });
+        this.title = '';
+        this.detail = '';
+      },
       removeTodo: function(todo) {
         this.todos.$remove(todo);
-      },
-      editTodo: function(todo) {
-        // 在html中使用的数据必须在data上定义，否则在调试工具中也看不到
-        this.beforeEditCache = todo.title;
-        this.editedTodo = todo;
-      },
-      doneEdit: function(todo) {
-        if (!this.editedTodo) return;
-        this.editedTodo = null;
-        todo.title = todo.title.trim();
-        if (!todo.title) {
-          this.removeTodo(todo);
-        }
       },
       cancelEdit: function(todo) {
         this.editedTodo = null;
@@ -87,6 +86,9 @@
       },
       removeCompleted: function() {
         this.todos = filters.active(this.todos);
+      },
+      changeEditing: function() {
+        this.editing = !this.editing;
       }
     },
     directives: {
@@ -97,6 +99,9 @@
           el.focus();
         });
       }
+    },
+    filters: {
+      marked: marked
     }
   });
 })(window);

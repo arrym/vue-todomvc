@@ -7,7 +7,7 @@ body {
 	margin: 0 auto;
 	padding: 0 15px;
 }
-h1{
+.appname{
 	color: #34495e;
 	margin: 20px 0;
 }
@@ -40,7 +40,64 @@ h1{
 }
 .glyphicon-plus{
 	float: right;
+	cursor: pointer;
 }
+.edit{
+	padding: 10px 20px;
+	background: #F0DDAA;
+	color: #34495e;
+	overflow: hidden;
+}
+
+.edit .title{
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 4px 10px;
+	border: 0 none;
+	border-radius: 3px;
+	font-size: 16px;
+	outline: none;
+}
+.edit .content{
+	width: 100%;
+	min-height: 300px;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 0 none;
+	border-radius: 5px;
+	outline: none;
+	background: #ffffff;
+}
+.edit .btn{
+	float: right;
+	padding: 5px 17px;
+	margin-left: 10px;
+	outline: none;
+}
+.edit .btn-save{
+	background: RGBA(49, 173, 160, 1.00);
+}
+/*@keyframes shake {
+  from, to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+.glyphicon-plus:hover{
+	-webkit-animation-name: shake;
+	animation-name: shake;
+}*/
 .main{
 	margin: 0px;
 	padding: 0;
@@ -50,11 +107,10 @@ h1{
 .main .todo{
 	position: relative;
 	margin-bottom: 2px;
-	padding: 10px 20px;
+	padding: 15px 20px;
 	list-style: none;
 	font-size: 14px;
 	background: #34495e;
-	cursor: pointer;
 }
 .main .todo:last-child{
 	margin: 0;
@@ -72,9 +128,15 @@ h1{
 .main .content{
 	margin-left: 40px;
 }
-.main .edit{
-	display: none;
+.main .content .title{
+	display: block;
+	border: 0 none;
+	background: none;
+	font-size: 20px;
+	margin-bottom: 10px;
+	outline: none;
 }
+
 .glyphicon-ok{
 	position: absolute;
 	top:50%;
@@ -84,11 +146,10 @@ h1{
 	border-radius: 50%;
 	background: #ffffff;
 	color: rgba(255, 255, 255, 0);
-}
-.ok{
-
+	cursor: pointer;
 }
 .okAll{
+	cursor: pointer;
 	color: #31ADA0;
 	background: #34495e;
 }
@@ -119,82 +180,8 @@ h1{
 	padding: 0;
 	border: 0 none;
 	background: #31ADA0;
+	outline: none;
 }
 .footer .todo-count{
 	margin-left: 40px;
-}
-
-.bounce-transition{
-}
-@keyframes bounceInLeft {
-	from, 60%, 75%, 90%, to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  }
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(-3000px, 0, 0);
-    transform: translate3d(-3000px, 0, 0);
-  }
-
-  60% {
-    opacity: 1;
-    -webkit-transform: translate3d(25px, 0, 0);
-    transform: translate3d(25px, 0, 0);
-  }
-
-  75% {
-    -webkit-transform: translate3d(-10px, 0, 0);
-    transform: translate3d(-10px, 0, 0);
-  }
-
-  90% {
-    -webkit-transform: translate3d(5px, 0, 0);
-    transform: translate3d(5px, 0, 0);
-  }
-
-  to {
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-.bounce-enter{
-	animation: bounceInLeft .5s;
-}
-
-@keyframes bounceInRight {
-	from, 60%, 75%, 90%, to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  }
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(3000px, 0, 0);
-    transform: translate3d(3000px, 0, 0);
-  }
-
-  60% {
-    opacity: 1;
-    -webkit-transform: translate3d(-25px, 0, 0);
-    transform: translate3d(-25px, 0, 0);
-  }
-
-  75% {
-    -webkit-transform: translate3d(10px, 0, 0);
-    transform: translate3d(10px, 0, 0);
-  }
-
-  90% {
-    -webkit-transform: translate3d(-5px, 0, 0);
-    transform: translate3d(-5px, 0, 0);
-  }
-
-  to {
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-.bounce-leave{
-	animation: bounceInRight .5s;
 }
