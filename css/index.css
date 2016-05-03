@@ -11,34 +11,30 @@ body {
 	border-radius: 6px;
 }
 .header{
+	position: relative;
 	background: #31ADA0;
 	border-radius: 6px 6px 0 0;
 	padding: 20px;
-	padding-right: 27px;
+	font-size: 20px;
+	color: #34495e;
 }
 .header .search{
 	padding-left: 15px;
-	color: #34495e;
 	background: none;
 	border: 0 none;
 	box-shadow: none;
 	outline: 0 none;
-	line-height: 20px;
-	font-size: 20px;
 	font-weight: 700;
 }
 .header .search::-webkit-input-placeholder{
-	color: #34495e;
+	color: RGBA(52, 73, 94, .8)
 }
 .glyphicon-plus{
-	float: right;
-	font-size: 20px;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translate3d(0, -50%, 0);
 	cursor: pointer;
-	color: #34495e;
-}
-.glyphicon-search{
-	font-size: 20px;
-	color: #34495e;
 }
 .edit{
 	padding: 10px 20px;
@@ -203,4 +199,32 @@ body {
 }
 .to-top:hover{
 	opacity: 1;
+}
+@media screen and (max-width: 640px) {
+	.container{
+		margin: 0;
+		padding: 0;
+	}
+	.header{
+		font-size: 16px;
+	}
+	.main .todo{
+		font-size: 12px;
+		padding: 15px;
+	}
+	.main .todo .content{
+		margin: 0;
+	}
+	.glyphicon-ok{
+		display: none;
+	}
+	.todo-control{
+		font-size: 12px
+	}
+	.footer .todo-count{
+		margin: 0;
+	}
+	.footer .filters{
+		display: none;
+	}
 }
