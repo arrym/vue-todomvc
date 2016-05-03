@@ -21,9 +21,8 @@
       todos: todoStorage.fetch(),
       visibility: 'all',
       query: '',
-      title: '',
       detail: '',
-      editing: false
+      adding: false
     },
     watch: {
       todos: {
@@ -47,15 +46,6 @@
       }
     },
     methods: {
-      addTodo: function() {
-        var value = this.newTodo && this.newTodo.trim();
-        if (!value) return;
-        this.todos.push({
-          title: value,
-          completed: false
-        });
-        this.newTodo = '';
-      },
       toggleStatus: function(todo) {
         todo.completed = !todo.completed;
       },
@@ -66,29 +56,49 @@
         });
       },
       save: function() {
-        const title = this.title.trim();
         const detail = this.detail.trim();
-        if (!title || !detail) return;
-        this.todos.push({
-          title: title,
+        if (!detail) return;
+        this.todos.unshift({
           detail: detail,
           completed: false
         });
-        this.title = '';
         this.detail = '';
+        this.adding = false;
+        const cacheTodo = this.cacheTodo;
+        if (cacheTodo) {
+          this.todos.$remove(cacheTodo);
+          this.cacheTodo = null;
+        }
       },
       removeTodo: function(todo) {
         this.todos.$remove(todo);
       },
-      cancelEdit: function(todo) {
-        this.editedTodo = null;
-        todo.title = this.beforeEditCache;
+      cancelAdd: function() {
+        const cacheTodo = this.cacheTodo;
+        if (cacheTodo) {
+          this.cacheTodo = null;
+        }
+        this.detail = '';
+        this.adding = false;
       },
       removeCompleted: function() {
         this.todos = filters.active(this.todos);
       },
-      changeEditing: function() {
-        this.editing = !this.editing;
+      changeAdding: function() {
+        this.adding = !this.adding;
+      },
+      editedTodo: function(todo) {
+        this.cacheTodo = todo;
+        this.adding = true;
+        this.detail = todo.detail;
+      },
+      exportTodo: function(todo) {
+        let now = new Date();
+        now = now.getTime() + '.md';
+        doSave(todo.detail, "text/latex", now);
+      },
+      toTop: function() {
+        top();
       }
     },
     directives: {

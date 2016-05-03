@@ -1,0 +1,12 @@
+h1, h2, h3{
+  margin-top: 10px;
+}
+ol, ul{
+  padding-left: 15px;
+  padding-bottom: 10px;
+}
+blockquote{
+  /*background: RGBA(44, 62, 80, 1.00);*/
+  background: #F0DDAA;
+  color: #34495e;
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>vue-todo-mvc</title>
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/normalize-zh.css">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/vue-animate.css">
     <link rel="stylesheet" href="css/index.css" charset="utf-8">
@@ -12,31 +13,34 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="appname">todos</h1>
       <div class="todoapp">
         <header class="header">
-          <span class="glyphicon glyphicon-plus" @click="changeEditing"></span>
+          <span class="glyphicon glyphicon-plus" @click="changeAdding"></span>
           <span class="glyphicon glyphicon-search"></span>
           <input class="search"
             placeholder="Search..."
             autofocus autocomplete="off"
             v-model="query"
-            @keyup.enter="addTodo"
           >
         </header>
-        <div class="edit animated" v-show="editing" transition="updown" :class="{editing: editing}">
-          <input class="title" type="text" v-model="title" placeholder="标题">
-          <textarea class="content" v-model="detail" debounce="500">
+        <div class="edit animated" v-show="adding" transition="updown">
+          <textarea class="content" v-model="detail" debounce="500" placeholder="请使用markdown语法编辑笔记">
           </textarea>
           <button class="btn btn-save" type="button" @click="save">保 存</button>
-          <button class="btn btn-cancel" type="button" @click="cancelEdit">取 消</button>
+          <button class="btn btn-cancel" type="button" @click="cancelAdd">取 消</button>
         </div>
         <ul class="main" v-cloak>
-          <li class="todo animated" v-for="todo in filteredTodos | filterBy query in 'title' 'detail'" transition="bounce" :class="{completed: todo.completed, bounce: todo.completed}">
+          <li class="todo animated" v-for="todo in filteredTodos | filterBy query in 'detail'" transition="bounce" :class="{completed: todo.completed, bounce: todo.completed}">
             <span class="glyphicon glyphicon-ok" @click="toggleStatus(todo)"></span>
-            <div class="content">
-              <input class="title" type="text" v-model="todo.title">
+            <div class="content" @dblclick="editedTodo(todo)">
               <div class="detail" v-html="todo.detail | marked"></div>
+            </div>
+            <div class="todo-control">
+              <span class="glyphicon glyphicon-pencil" @click="editedTodo(todo)"></span>
+              <span class="glyphicon glyphicon-remove" @click="removeTodo(todo)"></span>
+              <span class="glyphicon glyphicon-arrow-up"></span>
+              <span class="glyphicon glyphicon-arrow-down"></span>
+              <span class="glyphicon glyphicon-download-alt" @click="exportTodo(todo)"></span>
             </div>
           </li>
         </ul>
@@ -47,15 +51,19 @@
           <strong v-text="remaining"></strong> {{remaining | pluralize 'item'}} left
         </span>
         <ul class="filters">
-          <li><a href="#/all" :class="{selected: visibility == 'all'}">All</a></li>
-          <li><a href="#/active" :class="{selected: visibility == 'active'}">Active</a></li>
-          <li><a href="#/completed" :class="{selected: visibility == 'completed'}">Completed</a></li>
+          <li class="li"><a class="route" href="#/all" :class="{selected: visibility == 'all'}">All</a></li>
+          <li class="li"><a class="route" href="#/active" :class="{selected: visibility == 'active'}">Active</a></li>
+          <li class="li"><a class="route" href="#/completed" :class="{selected: visibility == 'completed'}">Completed</a></li>
         </ul>
         <button class="clear-completed" @click="removeCompleted">
           Clear completed
         </button>
       </footer>
+      <div class="top" @click="toTop">
+        <span class="glyphicon glyphicon-arrow-up to-top"></span>
+      </div>
     </div>
+    <script src="lib/util.js" charset="utf-8"></script>
     <script src="lib/marked.min.js" charset="utf-8"></script>
     <script src="lib/vue.js" charset="utf-8"></script>
     <script src="lib/vue-animated-list.js" charset="utf-8"></script>
