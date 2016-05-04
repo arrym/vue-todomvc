@@ -23,3 +23,6 @@ Vue.transition('bounce', {
 <li class="todo animated" v-for="todo in filteredTodos" transition="bounce">
 
 ```
+
+## 参考
+参考Leo Deng的todo https://github.com/myst729/vue-tada 
